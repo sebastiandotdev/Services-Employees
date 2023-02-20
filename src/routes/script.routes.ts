@@ -5,4 +5,4 @@ const router = Router();
 
 router.get("/", getEmployees);
 
-export default router;
+export { router };
