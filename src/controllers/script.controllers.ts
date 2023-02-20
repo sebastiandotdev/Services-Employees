@@ -9,3 +9,31 @@ export const getEmployees = async (req: Request, res: Response) => {
   });
   res.json(users);
 };
+
+export const saveEmployees = async (req: Request, res: Response) => {
+  const {
+    email,
+    name,
+    post: { title, content },
+  } = req.body;
+
+  const newUser = await prisma.user.create({
+    data: {
+      email: email,
+      name: name,
+      posts: {
+        create: {
+          title: title,
+          content: content,
+        },
+      },
+    },
+  });
+  res.json({
+    POST: {
+      data: {
+        ...newUser,
+      },
+    },
+  });
+};
