@@ -37,3 +37,16 @@ export const saveEmployees = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const userById = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const user = await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      posts: true,
+    },
+  });
+  res.json({ user });
+};
