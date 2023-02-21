@@ -47,7 +47,7 @@ export const saveEmployees = async (req: Request, res: Response) => {
   }
 };
 
-export const userById = async (req: Request, res: Response) => {
+export const employeesById = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     const user = await prisma.user.findUnique({
@@ -59,6 +59,26 @@ export const userById = async (req: Request, res: Response) => {
       },
     });
     return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+};
+
+export const updateEmployees = async (req: Request, res: Response) => {
+  try {
+    const { email, name } = req.body;
+    const id = parseInt(req.params.id);
+
+    await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        email: email,
+        name: name,
+      },
+    });
+    return res.status(200).json({ message: "user update" });
   } catch (error) {
     return res.status(500).json({ message: error });
   }
