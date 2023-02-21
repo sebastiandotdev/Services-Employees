@@ -2,51 +2,64 @@ import { Request, Response } from "express";
 import { prisma } from "../connection/script.connect";
 
 export const getEmployees = async (req: Request, res: Response) => {
-  const users = await prisma.user.findMany({
-    include: {
-      posts: true,
-    },
-  });
-  res.json(users);
+  try {
+    const users = await prisma.user.findMany({
+      include: {
+        posts: true,
+      },
+    });
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
 };
 
 export const saveEmployees = async (req: Request, res: Response) => {
-  const {
-    email,
-    name,
-    post: { title, content },
-  } = req.body;
+  try {
+    const {
+      email,
+      name,
+      post: { title, content },
+    } = req.body;
 
-  const newUser = await prisma.user.create({
-    data: {
-      email: email,
-      name: name,
-      posts: {
-        create: {
-          title: title,
-          content: content,
+    const newUser = await prisma.user.create({
+      data: {
+        email: email,
+        name: name,
+        posts: {
+          create: {
+            title: title,
+            content: content,
+          },
         },
       },
-    },
-  });
-  res.json({
-    POST: {
-      data: {
-        ...newUser,
+    });
+    return res.status(200).json({
+      POST: {
+        data: {
+          email: newUser.email,
+          name: newUser.name,
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
 };
 
 export const userById = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  const user = await prisma.user.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      posts: true,
-    },
-  });
-  res.json(user);
+  try {
+    const id = parseInt(req.params.id);
+    const user = await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        posts: true,
+      },
+    });
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
 };
