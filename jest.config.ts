@@ -2,9 +2,9 @@ import { Config } from "@jest/types";
 
 const config: Config.InitialOptions = {
   transform: {
-    "^.+\\.ts?$": "babel-jest",
+    "^.+\\.tsx?$": "babel-jest",
   },
-  testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
 };
 
 export default config;

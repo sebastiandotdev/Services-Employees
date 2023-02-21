@@ -48,5 +48,5 @@ export const userById = async (req: Request, res: Response) => {
       posts: true,
     },
   });
-  res.json({ user });
+  res.json(user);
 };
