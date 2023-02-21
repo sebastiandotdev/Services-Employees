@@ -2,13 +2,15 @@ import { Router } from "express";
 import {
   getEmployees,
   saveEmployees,
-  userById,
+  employeesById,
+  updateEmployees,
 } from "../controllers/script.controllers";
 
 const router = Router();
 
 router.get("/", getEmployees);
-router.get("/:id", userById);
+router.get("/:id", employeesById);
 router.post("/", saveEmployees);
+router.put("/:id", updateEmployees);
 
 export { router };
