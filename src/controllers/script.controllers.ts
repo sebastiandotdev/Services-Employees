@@ -83,3 +83,25 @@ export const updateEmployees = async (req: Request, res: Response) => {
     return res.status(500).json({ message: error });
   }
 };
+
+export const deleteEmployees = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    const employeesDelete = await prisma.user.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return res.json({
+      delete: {
+        ...employeesDelete,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "error server",
+    });
+  }
+};
