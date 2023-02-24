@@ -7,6 +7,10 @@ describe("GET", () => {
     expect(response.status).toBe(200);
   });
 
+  test("should return a error", async () => {
+    const response = await request(app).get("/api/undefined").send();
+    expect(response.status).toBe(500);
+  });
   test("should response json", async () => {
     const response = await request(app).get("/api").send();
     expect(response.body).toBeInstanceOf(Array);
@@ -14,6 +18,6 @@ describe("GET", () => {
 
   test("should response OK", async () => {
     const response = await request(app).get("/api").send();
-    expect(response.ok).toBeTruthy()
+    expect(response.ok).toBeTruthy();
   });
 });
